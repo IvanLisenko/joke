@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Взломан!</title>
+<style>
+  body {
+    background: black;
+    color: red;
+    font-family: monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+  }
+  #progressContainer {
+    width: 80%;
+    background: #333;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  #progressBar {
+    width: 0%;
+    height: 20px;
+    background: red;
+    border-radius: 8px;
+    transition: width 0.3s;
+  }
+  .file {
+    color: white;
+    font-size: 0.9em;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Ну всё, тебя взломали 😎</h1>
+<p>Идёт скачивание твоих личных данных...</p>
+
+<div id="progressContainer">
+  <div id="progressBar"></div>
+</div>
+
+<div id="fileList"></div>
+
+<script>
+  const fakeFiles = [
+    "contacts.csv",
+    "messages.db",
+    "photos.zip",
+    "passwords.txt",
+    "browser_history.log"
+  ];
+
+  const progressBar = document.getElementById('progressBar');
+  const fileList = document.getElementById('fileList');
+
+  let progress = 0;
+  let index = 0;
+
+  function downloadStep() {
+    if(index < fakeFiles.length){
+      const file = fakeFiles[index];
+      const div = document.createElement('div');
+      div.className = "file";
+      div.textContent = "Скачано: " + file;
+      fileList.appendChild(div);
+
+      progress += 100 / fakeFiles.length;
+      progressBar.style.width = progress + "%";
+
+      index++;
+      setTimeout(downloadStep, 1000); // шаг каждые 1 сек
+    } else {
+      const div = document.createElement('div');
+      div.className = "file";
+      div.textContent = "Завершено. Данные — фейк, всё безопасно 😉";
+      fileList.appendChild(div);
+    }
+  }
+
+  // Запуск анимации через 1 сек после загрузки страницы
+  setTimeout(downloadStep, 1000);
+</script>
+
+</body>
+</html>
